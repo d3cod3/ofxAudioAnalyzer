@@ -604,8 +604,11 @@ bool ofxAudioAnalyzerUnit::getIsActive(ofxAAAlgorithm algorithm){
             
         default:
             ofLogWarning()<<"ofxAudioAnalyzerUnit: wrong algorithm to get if is active.";
+            return false;
             break;
     }
+
+    return false;
 
 }
 //----------------------------------------------
@@ -767,6 +770,8 @@ bool ofxAudioAnalyzerUnit::getOnsetValue(){
 //----------------------------------------------
 vector<float>& ofxAudioAnalyzerUnit::getValues(ofxAAAlgorithm algorithm, float smooth){
     
+    vector<float> temp;
+
     switch (algorithm) {
         
         case SPECTRUM:
@@ -795,8 +800,11 @@ vector<float>& ofxAudioAnalyzerUnit::getValues(ofxAAAlgorithm algorithm, float s
             
         default:
             ofLogError()<<"ofxAudioAnalyzerUnit: wrong algorithm for getting values.";
+            return temp;
             break;
     }
+
+    return temp;
 }
 //----------------------------------------------
 vector<SalienceFunctionPeak>& ofxAudioAnalyzerUnit::getPitchSaliencePeaksRef(float smooth){
@@ -825,8 +833,11 @@ int ofxAudioAnalyzerUnit::getBinsNum(ofxAAAlgorithm algorithm){
             
         default:
             ofLogError()<<"ofxAudioAnalyzerUnit: wrong algorithm for getting bins number.";
+            return -1;
             break;
     }
+
+    return -1;
     
 }
 //----------------------------------------------
