@@ -1,6 +1,6 @@
 
 #ifndef VERSION_H_
 #define VERSION_H_
-#define ESSENTIA_VERSION "2.1-dev"
-#define ESSENTIA_GIT_SHA "5bfe18e"
+#define ESSENTIA_VERSION "2.1-beta3"
+#define ESSENTIA_GIT_SHA "Undefined"
 #endif /* VERSION_H_ */
