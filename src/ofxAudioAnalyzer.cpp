@@ -82,7 +82,7 @@ void ofxAudioAnalyzer::analyze(const ofSoundBuffer & inBuffer){
         ofLogWarning()<<"ofxAudioAnalyzer: inBuffer sample rate not matching.";
     }
     
-    for (int i=0; i<_channels; i++){
+    /*for (int i=0; i<_channels; i++){
         ofSoundBuffer chBuff;
         inBuffer.getChannel(chBuff, i);//copy channel from inBuffer
         if(channelAnalyzerUnits[i]!=nullptr){
@@ -92,6 +92,13 @@ void ofxAudioAnalyzer::analyze(const ofSoundBuffer & inBuffer){
             ofLogError()<<"ofxAudioAnalyzer: channelAnalyzer NULL pointer";
         }
         
+    }*/
+
+    if(channelAnalyzerUnits[0]!=nullptr){
+        channelAnalyzerUnits[0]->analyze(inBuffer.getBuffer());
+        //cout<<"analyzer-"<<i<<"rms"<<channelAnalyzerUnits[i]->getRms()<<endl;
+    }else{
+        ofLogError()<<"ofxAudioAnalyzer: channelAnalyzer NULL pointer";
     }
     
 }

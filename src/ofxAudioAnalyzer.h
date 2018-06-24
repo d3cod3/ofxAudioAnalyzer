@@ -26,6 +26,7 @@
 
 #include "ofMain.h"
 #include "ofxAudioAnalyzerUnit.h"
+#include "ofxFftw/ofxFftw.h"
 
 
 class ofxAudioAnalyzer{
