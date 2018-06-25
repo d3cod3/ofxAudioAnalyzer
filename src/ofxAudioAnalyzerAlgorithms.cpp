@@ -322,5 +322,3 @@ float ofxAATuningFrequencyAlgorithm::getFreqValue(){
 float ofxAATuningFrequencyAlgorithm::getCentsValue(){
     return centsFloatVal;
 }
-//-------------------------------------------
-

@@ -213,7 +213,7 @@ AlgorithmStatus PercivalBpmEstimator::process() {
 
   // If there are no lag estimates, return bpm 0
   if (lags.size() == 0) {
-    _bpm.push(0.0);
+    _bpm.push(0.0f);
     return FINISHED;
   }
 
@@ -242,7 +242,7 @@ AlgorithmStatus PercivalBpmEstimator::process() {
 
   // Pick highest peak
   int selectedLag = argmax(accum);
-  Real bpm = _srOSS * 60.0 / selectedLag;
+  Real bpm = static_cast<Real>(_srOSS * 60.0f / selectedLag);
 
   // Octave decider (svm classifier)
 
@@ -261,32 +261,32 @@ AlgorithmStatus PercivalBpmEstimator::process() {
   // Apparently list initializer is not enabled so must initialize in this way...
   std::vector<Real> mins;
   mins.resize(3);
-  mins[0] = 0.0321812;
-  mins[1] = 1.68126e-83;
-  mins[2] = 50.1745;
+  mins[0] = 0.0321812f;
+  mins[1] = static_cast<Real>(1.68126e-83);
+  mins[2] = 50.1745f;
   std::vector<Real> maxs;
   maxs.resize(3);
-  maxs[0] = 0.863237;
-  maxs[1] = 0.449184;
-  maxs[2] = 208.807;
+  maxs[0] = 0.863237f;
+  maxs[1] = 0.449184f;
+  maxs[2] = 208.807f;
   std::vector<Real> svmWeights51;
   svmWeights51.resize(4);
-  svmWeights51[0] = -1.955100;
-  svmWeights51[1] = 0.434800;
-  svmWeights51[2] = -4.644200;
-  svmWeights51[3] = 3.289600;
+  svmWeights51[0] = -1.955100f;
+  svmWeights51[1] = 0.434800f;
+  svmWeights51[2] = -4.644200f;
+  svmWeights51[3] = 3.289600f;
   std::vector<Real> svmWeights52;
   svmWeights52.resize(4);
-  svmWeights52[0] = -3.040800;
-  svmWeights52[1] = 2.759100;
-  svmWeights52[2] = -6.536700;
-  svmWeights52[3] = 3.081000;
+  svmWeights52[0] = -3.040800f;
+  svmWeights52[1] = 2.759100f;
+  svmWeights52[2] = -6.536700f;
+  svmWeights52[3] = 3.081000f;
   std::vector<Real> svmWeights12;
   svmWeights12.resize(4);
-  svmWeights12[0] = -3.462400;
-  svmWeights12[1] = 3.439700;
-  svmWeights12[2] = -9.489700;
-  svmWeights12[3] = 1.629700;
+  svmWeights12[0] = -3.462400f;
+  svmWeights12[1] = 3.439700f;
+  svmWeights12[2] = -9.489700f;
+  svmWeights12[3] = 1.629700f;
 
   // Normalize features
   for (int i=0; i<features.size(); ++i){
@@ -295,14 +295,14 @@ AlgorithmStatus PercivalBpmEstimator::process() {
 
   // Do classification to get the multiplier for the bpm
   Real svmSum51, svmSum52, svmSum12;
-  svmSum51 = svmWeights51[svmWeights51.size()-1] + features[0] * svmWeights51[0] + features[1] * svmWeights51[1] + features[2] * svmWeights51[2];
-  svmSum52 = svmWeights52[svmWeights52.size()-1] + features[0] * svmWeights52[0] + features[1] * svmWeights52[1] + features[2] * svmWeights52[2];
-  svmSum12 = svmWeights12[svmWeights12.size()-1] + features[0] * svmWeights12[0] + features[1] * svmWeights12[1] + features[2] * svmWeights12[2];
+  svmSum51 = static_cast<Real>(svmWeights51[svmWeights51.size()-1] + features[0] * svmWeights51[0] + features[1] * svmWeights51[1] + features[2] * svmWeights51[2]);
+  svmSum52 = static_cast<Real>(svmWeights52[svmWeights52.size()-1] + features[0] * svmWeights52[0] + features[1] * svmWeights52[1] + features[2] * svmWeights52[2]);
+  svmSum12 = static_cast<Real>(svmWeights12[svmWeights12.size()-1] + features[0] * svmWeights12[0] + features[1] * svmWeights12[1] + features[2] * svmWeights12[2]);
   Real mult = 1.0;
-  if ((svmSum52 > 0.0) && (svmSum12 > 0.0)){
+  if ((svmSum52 > 0.0f) && (svmSum12 > 0.0f)){
     mult = 2.0;
   }
-  if ((svmSum51 <= 0.0) && (svmSum52 <= 0.0)){
+  if ((svmSum51 <= 0.0f) && (svmSum52 <= 0.0f)){
     mult = 0.5;
   }
 

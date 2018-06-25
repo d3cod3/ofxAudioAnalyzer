@@ -103,7 +103,7 @@ void ofxAudioAnalyzerUnit::setup(int sampleRate, int bufferSize){
     dcremoval.algorithm = factory.create("DCRemoval", "sampleRate", _samplerate);
 
     window.algorithm = factory.create("Windowing",
-                                 "type", "hann",
+                                 "type", "hamming",
                                  "zeroPadding", zeropadding);
 
     fft.algorithm = factory.create("FFT", "size", _framesize);
@@ -361,7 +361,6 @@ void ofxAudioAnalyzerUnit::analyze(const vector<float> & inBuffer){
         //the strong decay is not defined for a zero signal
         strongDecay.compute();
     }
-    
     
     #pragma mark -Cast results to float
     
@@ -754,8 +753,6 @@ float ofxAudioAnalyzerUnit::getValue(ofxAAAlgorithm algorithm, float smooth, boo
                 strongDecay.getValue();
             }
             break;
-            
-            
         default:
             ofLogWarning()<<"ofxAudioAnalyzerUnit: wrong algorithm for getting value.";
             break;
@@ -874,7 +871,6 @@ float ofxAudioAnalyzerUnit::getMaxEstimatedValue(ofxAAAlgorithm algorithm){
         case STRONG_DECAY:
             r = strongDecay.getMaxEstimatedValue();
             break;
-            
         default:
             ofLogError()<<"ofxAudioAnalyzerUnit: wrong algorithm for setting max estimated value.";
             break;
@@ -914,7 +910,6 @@ void ofxAudioAnalyzerUnit::setMaxEstimatedValue(ofxAAAlgorithm algorithm, float 
         case STRONG_DECAY:
             strongDecay.setMaxEstimatedValue(value);
             break;
-            
         default:
              ofLogError()<<"ofxAudioAnalyzerUnit: wrong algorithm for setting max estimated value.";
             break;
