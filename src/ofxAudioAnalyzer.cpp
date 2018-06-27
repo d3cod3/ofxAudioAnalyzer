@@ -36,10 +36,10 @@ void ofxAudioAnalyzer::setup(int sampleRate, int bufferSize, int channels){
         _channels = 1;
     }
     
-    for(int i=0; i<_channels; i++){
+    //for(int i=0; i<_channels; i++){
         ofxAudioAnalyzerUnit * aaUnit = new ofxAudioAnalyzerUnit(_samplerate, _buffersize);
         channelAnalyzerUnits.push_back(aaUnit);
-    }
+    //}
     
 }
 //-------------------------------------------------------
@@ -59,16 +59,16 @@ void ofxAudioAnalyzer::reset(int sampleRate, int bufferSize, int channels){
     }
     channelAnalyzerUnits.clear();
     
-    for(int i=0; i<_channels; i++){
+    //for(int i=0; i<_channels; i++){
         ofxAudioAnalyzerUnit * aaUnit = new ofxAudioAnalyzerUnit(_samplerate, _buffersize);
         channelAnalyzerUnits.push_back(aaUnit);
-    }
+    //}
     
 }
 //-------------------------------------------------------
 void ofxAudioAnalyzer::analyze(const ofSoundBuffer & inBuffer){
    
-    if(inBuffer.getNumChannels() != _channels){
+    /*if(inBuffer.getNumChannels() != _channels){
         ofLogError()<<"ofxAudioAnalyzer: inBuffer channels number incorrect.";
         return;
     }
@@ -76,7 +76,7 @@ void ofxAudioAnalyzer::analyze(const ofSoundBuffer & inBuffer){
     if(channelAnalyzerUnits.size()!= _channels){
         ofLogError()<<"ofxAudioAnalyzer: wrong number of audioAnalyzerUnits";
         return;
-    }
+    }*/
     
     if(inBuffer.getSampleRate() != _samplerate){
         ofLogWarning()<<"ofxAudioAnalyzer: inBuffer sample rate not matching.";
