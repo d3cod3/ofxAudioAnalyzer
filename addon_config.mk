@@ -86,9 +86,10 @@ common:
 
 #android/armeabi-v7a:
 
-osx:
+#osx:
 	# osx/iOS only, any framework that should be included in the project
-        #ADDON_FRAMEWORKS = OpenAL
+	#ADDON_FRAMEWORKS = OpenAL
 
 
-ios:
+#ios:
+	
