@@ -95,6 +95,9 @@ class ofxAudioAnalyzer{
     int _channels;
     
     vector<ofxAudioAnalyzerUnit*> channelAnalyzerUnits;
+
+    vector<float>r;
+    vector<SalienceFunctionPeak> rfp;
     
     
 };

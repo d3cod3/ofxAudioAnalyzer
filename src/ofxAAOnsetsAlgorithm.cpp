@@ -119,19 +119,19 @@ bool ofxAAOnsetsAlgorithm::onsetBufferEvaluation (Real iDetectHfc, Real iDetectC
     if (iDetectHfc > hfc_max) {
         prop_hfc = iDetectHfc/hfc_max;
         hfc_max = iDetectHfc;
-        for (int i=0; i<detections[0].size(); i++)
+        for (int i=0; i<static_cast<int>(detections[0].size()); i++)
             detections[0][i] /= prop_hfc;
     }
     if (iDetectComplex > complex_max){
         prop_complex = iDetectComplex/complex_max;
         complex_max = iDetectComplex;
-        for (int i=0; i<detections[1].size(); i++)
+        for (int i=0; i<static_cast<int>(detections[1].size()); i++)
             detections[1][i] /= prop_complex;
     }
     if (iDetectFlux > flux_max){
         prop_flux = iDetectFlux/flux_max;
         flux_max = iDetectFlux;
-        for (int i=0; i<detections[2].size(); i++)
+        for (int i=0; i<static_cast<int>(detections[2].size()); i++)
             detections[2][i] /= prop_flux;
     }
     
@@ -148,7 +148,7 @@ bool ofxAAOnsetsAlgorithm::onsetBufferEvaluation (Real iDetectHfc, Real iDetectC
     detections[2].push_back(flux_norm);
     detections[2].erase(detections[2].begin());
     
-    for (int i=0; i<detection_sum.size(); i++){
+    for (int i=0; i<static_cast<int>(detection_sum.size()); i++){
         int n=0;
         detection_sum[i]=0;
         if(addHfc){
@@ -214,7 +214,7 @@ bool ofxAAOnsetsAlgorithm::onsetBufferNumThresholdEvaluation(){
 void ofxAAOnsetsAlgorithm::reset(){
     
     hfc_max = complex_max = flux_max = 0.0;
-    for (int i=0; i<detection_sum.size(); i++){
+    for (int i=0; i<static_cast<int>(detection_sum.size()); i++){
         detection_sum[i] = 0.0;
     }
     

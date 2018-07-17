@@ -209,7 +209,7 @@ void ofxAAMultiPitchKlapuriAlgorithm::compute(){
     
     //cast to floats:
     pitches.clear();
-    for (int i=0; i<localF0.size(); i++){
+    for (int i=0; i<static_cast<int>(localF0.size()); i++){
         float value = (float) localF0[i];
         pitches.push_back(value);
     }

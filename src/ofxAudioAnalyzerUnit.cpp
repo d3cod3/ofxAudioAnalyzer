@@ -28,7 +28,7 @@
 //--------------------------------------------------------------
 void ofxAudioAnalyzerUnit::setup(int sampleRate, int bufferSize){
     
-    #pragma mark -Init variables:
+    //#pragma mark -Init variables:
     
     _framesize = bufferSize;
     hopsize = _framesize/2;
@@ -39,7 +39,7 @@ void ofxAudioAnalyzerUnit::setup(int sampleRate, int bufferSize){
     audioBuffer.resize(bufferSize);
 
     
-    #pragma mark -Init algorithms:
+    //#pragma mark -Init algorithms:
     
     onsets.setup(bufferSize);
     
@@ -93,7 +93,7 @@ void ofxAudioAnalyzerUnit::setup(int sampleRate, int bufferSize){
     
     essentia::init();
 
-    #pragma mark -Create algorithms
+    //#pragma mark -Create algorithms
     AlgorithmFactory& factory = AlgorithmFactory::instance();
     
     rms.algorithm = factory.create("RMS");
@@ -176,7 +176,7 @@ void ofxAudioAnalyzerUnit::setup(int sampleRate, int bufferSize){
     tristimulus.algorithm = factory.create("Tristimulus");
     
     
-    #pragma mark -Connect algorithms
+    //#pragma mark -Connect algorithms
     
     //DCRemoval
     dcremoval.algorithm->input("signal").set(audioBuffer);
@@ -298,16 +298,16 @@ void ofxAudioAnalyzerUnit::setup(int sampleRate, int bufferSize){
 //--------------------------------------------------------------
 void ofxAudioAnalyzerUnit::analyze(const vector<float> & inBuffer){
     
-    if(inBuffer.size() != _framesize){
+    if(static_cast<int>(inBuffer.size()) != _framesize){
         ofLogWarning()<<"ofxAudioAnalyzerUnit: buffer requested to analyze size(" <<inBuffer.size()<<")doesnt match the buffer size already set: "<<_framesize;
     }
     
     //Cast of incoming audio buffer to Real
-    for (int i=0; i<inBuffer.size();i++){
+    for (int i=0; i<static_cast<int>(inBuffer.size());i++){
         audioBuffer[i] = (Real) inBuffer[i];
     }
     
-    #pragma mark -Compute Algorithms
+    //#pragma mark -Compute Algorithms
     
     dcremoval.compute();
     rms.compute();
@@ -362,7 +362,7 @@ void ofxAudioAnalyzerUnit::analyze(const vector<float> & inBuffer){
         strongDecay.compute();
     }
     
-    #pragma mark -Cast results to float
+    //#pragma mark -Cast results to float
     
     spectrum.castValuesToFloat(true);
     
@@ -438,7 +438,7 @@ void ofxAudioAnalyzerUnit::exit(){
 }
 
 //--------------------------------------------------------------
-#pragma mark - Activates
+//#pragma mark - Activates
 //----------------------------------------------
 void ofxAudioAnalyzerUnit::setActive(ofxAAAlgorithm algorithm, bool state){
     
@@ -526,7 +526,7 @@ void ofxAudioAnalyzerUnit::setActive(ofxAAAlgorithm algorithm, bool state){
 
 
 //----------------------------------------------
-#pragma mark - Get values
+//#pragma mark - Get values
 //----------------------------------------------
 bool ofxAudioAnalyzerUnit::getIsActive(ofxAAAlgorithm algorithm){
     
@@ -766,8 +766,6 @@ bool ofxAudioAnalyzerUnit::getOnsetValue(){
 }
 //----------------------------------------------
 vector<float>& ofxAudioAnalyzerUnit::getValues(ofxAAAlgorithm algorithm, float smooth){
-    
-    vector<float> temp;
 
     switch (algorithm) {
         
@@ -794,14 +792,12 @@ vector<float>& ofxAudioAnalyzerUnit::getValues(ofxAAAlgorithm algorithm, float s
         case TRISTIMULUS:
             return smooth ? tristimulus.getSmoothedValues(smooth) : tristimulus.getValues();
             break;
-            
+
         default:
             ofLogError()<<"ofxAudioAnalyzerUnit: wrong algorithm for getting values.";
             return temp;
             break;
     }
-
-    return temp;
 }
 //----------------------------------------------
 vector<SalienceFunctionPeak>& ofxAudioAnalyzerUnit::getPitchSaliencePeaksRef(float smooth){
@@ -932,7 +928,7 @@ void ofxAudioAnalyzerUnit::setSalienceFunctionPeaksParameters(int maxPeaks){
     pitchSalienceFunctionPeaks.setMaxPeaksNum(maxPeaks);
 }
 //----------------------------------------------
-#pragma mark - Utils
+//#pragma mark - Utils
 //----------------------------------------------
 int ofxAudioAnalyzerUnit::getPitchFreqAsMidiNote(float smooth){
     return pitchToMidi(getValue(PITCH_FREQ, smooth));

@@ -25,7 +25,7 @@
 #include "ofxAudioAnalyzerAlgorithms.h"
 
 //-------------------------------------------
-#pragma mark - ofxAABaseAlgorithm
+//#pragma mark - ofxAABaseAlgorithm
 //-------------------------------------------
 void ofxAABaseAlgorithm::init(){
     
@@ -121,7 +121,7 @@ void ofxAABaseAlgorithm::deleteAlgorithm(){
     delete algorithm;
 }
 //-------------------------------------------
-#pragma mark - ofxAAOneVectorOutputAlgorithm
+//#pragma mark - ofxAAOneVectorOutputAlgorithm
 //-------------------------------------------
 void ofxAAOneVectorOutputAlgorithm::init(){
     isActivated = TRUE;
@@ -139,7 +139,7 @@ void ofxAAOneVectorOutputAlgorithm::assignFloatValuesSize(int size, int val){
 //-------------------------------------------
 void ofxAAOneVectorOutputAlgorithm::castValuesToFloat(bool logarithmic){
     
-    for (int i=0; i<realValues.size(); i++){
+    for (int i=0; i<static_cast<int>(realValues.size()); i++){
         if(getIsActive()){
             if(logarithmic){
                 
@@ -166,7 +166,7 @@ void ofxAAOneVectorOutputAlgorithm::castValuesToFloat(bool logarithmic){
 //-------------------------------------------
 void ofxAAOneVectorOutputAlgorithm::updateLogRealValues(){
     logRealValues.resize(realValues.size());
-    for (int i=0; i<realValues.size(); ++i)
+    for (int i=0; i<static_cast<int>(realValues.size()); ++i)
         logRealValues[i] = amp2db(realValues[i]);
     
 }
@@ -181,14 +181,14 @@ vector<float>& ofxAAOneVectorOutputAlgorithm::getValues(){
 //-------------------------------------------
 vector<float>& ofxAAOneVectorOutputAlgorithm::getSmoothedValues(float smthAmnt){
     
-    for(int i=0; i<smoothedFloatValues.size(); i++){
+    for(int i=0; i<static_cast<int>(smoothedFloatValues.size()); i++){
         smoothedFloatValues[i] = smoothedFloatValues[i] * smthAmnt + (1-smthAmnt) * floatValues[i];
     }
     
     return smoothedFloatValues;
 }
 //-------------------------------------------
-#pragma mark - ofxAAPitchSalienceFuntionPeaksAlgorithm
+//#pragma mark - ofxAAPitchSalienceFuntionPeaksAlgorithm
 //-------------------------------------------
 void ofxAAPitchSalienceFunctionPeaksAlgorithm::init(){
     
@@ -205,7 +205,7 @@ void ofxAAPitchSalienceFunctionPeaksAlgorithm::castValuesToFloat(){
     
     peaks.resize(realSalienceBins.size());
 
-    for (int i=0; i<realSalienceBins.size(); i++){
+    for (int i=0; i<static_cast<int>(realSalienceBins.size()); i++){
         peaks[i].bin = (float) realSalienceBins[i];
         peaks[i].value = realSalienceValues[i];
     }
@@ -214,7 +214,7 @@ void ofxAAPitchSalienceFunctionPeaksAlgorithm::castValuesToFloat(){
 //-------------------------------------------
 vector<SalienceFunctionPeak>& ofxAAPitchSalienceFunctionPeaksAlgorithm::getPeaks(){
     
-    if (limitPeaksNum && peaks.size() > maxPeaksNum){
+    if (limitPeaksNum && static_cast<int>(peaks.size()) > maxPeaksNum){
         peaks.resize(maxPeaksNum);
     }
     
@@ -224,13 +224,13 @@ vector<SalienceFunctionPeak>& ofxAAPitchSalienceFunctionPeaksAlgorithm::getPeaks
 //-------------------------------------------
 vector<SalienceFunctionPeak>& ofxAAPitchSalienceFunctionPeaksAlgorithm::getSmoothedPeaks(float smthAmnt){
     
-    if (limitPeaksNum && peaks.size() > maxPeaksNum){
+    if (limitPeaksNum && static_cast<int>(peaks.size()) > maxPeaksNum){
         peaks.resize(maxPeaksNum);
     }
     
     smoothedPeaks.resize(peaks.size(), SalienceFunctionPeak());
     
-    for(int i=0; i<smoothedPeaks.size(); i++){
+    for(int i=0; i<static_cast<int>(smoothedPeaks.size()); i++){
         smoothedPeaks[i].bin = smoothedPeaks[i].bin * smthAmnt + (1-smthAmnt) * peaks[i].bin;
 //        smoothedPeaks[i].bin = peaks[i].bin;
         smoothedPeaks[i].value = smoothedPeaks[i].value * smthAmnt + (1-smthAmnt) * peaks[i].value;
@@ -239,7 +239,7 @@ vector<SalienceFunctionPeak>& ofxAAPitchSalienceFunctionPeaksAlgorithm::getSmoot
     return smoothedPeaks;
 }
 //-------------------------------------------
-#pragma mark - ofxAAPitchDetectAlgorithm
+//#pragma mark - ofxAAPitchDetectAlgorithm
 //-------------------------------------------
 void ofxAAPitchDetectAlgorithm::init(){
     
@@ -302,7 +302,7 @@ void ofxAAPitchDetectAlgorithm::setMaxPitchEstimatedValue(float value){
 
 
 //-------------------------------------------
-#pragma mark - ofxAATuningFrequencyAlgorithm
+//#pragma mark - ofxAATuningFrequencyAlgorithm
 //-------------------------------------------
 void ofxAATuningFrequencyAlgorithm::castValuesToFloat(){
     if(getIsActive()){

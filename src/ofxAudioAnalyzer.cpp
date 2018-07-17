@@ -40,6 +40,8 @@ void ofxAudioAnalyzer::setup(int sampleRate, int bufferSize, int channels){
         ofxAudioAnalyzerUnit * aaUnit = new ofxAudioAnalyzerUnit(_samplerate, _buffersize);
         channelAnalyzerUnits.push_back(aaUnit);
     //}
+
+    r.push_back(0.0);
     
 }
 //-------------------------------------------------------
@@ -54,7 +56,7 @@ void ofxAudioAnalyzer::reset(int sampleRate, int bufferSize, int channels){
         _channels = 1;
     }
     
-    for (int i=0; i<channelAnalyzerUnits.size(); i++){
+    for (int i=0; i<static_cast<int>(channelAnalyzerUnits.size()); i++){
         channelAnalyzerUnits[i]->exit();
     }
     channelAnalyzerUnits.clear();
@@ -78,7 +80,7 @@ void ofxAudioAnalyzer::analyze(const ofSoundBuffer & inBuffer){
         return;
     }*/
     
-    if(inBuffer.getSampleRate() != _samplerate){
+    if(static_cast<int>(inBuffer.getSampleRate()) != _samplerate){
         ofLogWarning()<<"ofxAudioAnalyzer: inBuffer sample rate not matching.";
     }
     
@@ -105,7 +107,7 @@ void ofxAudioAnalyzer::analyze(const ofSoundBuffer & inBuffer){
 //-------------------------------------------------------
 void ofxAudioAnalyzer::exit(){
     
-    for(int i=0; i<channelAnalyzerUnits.size();i++){
+    for(int i=0; i<static_cast<int>(channelAnalyzerUnits.size());i++){
         channelAnalyzerUnits[i]->exit();
     }
     
@@ -126,7 +128,6 @@ vector<float>& ofxAudioAnalyzer::getValues(ofxAAAlgorithm algorithm, int channel
     
     if (channel >= _channels){
         ofLogError()<<"ofxAudioAnalyzer: channel for getting value is incorrect.";
-        vector<float>r (1, 0.0);
         return r;
     }
     
@@ -138,8 +139,9 @@ vector<SalienceFunctionPeak>& ofxAudioAnalyzer::getSalienceFunctionPeaks(int cha
     if (channel >= _channels){
         ofLogError()<<"ofxAudioAnalyzer: channel for getting value is incorrect.";
         //SalienceFunctionPeak peak = SalienceFunctionPeak();
-        vector<SalienceFunctionPeak> r(1, SalienceFunctionPeak());
-        return r;
+        rfp.clear();
+        rfp.push_back(SalienceFunctionPeak());
+        return rfp;
     }
     
      return channelAnalyzerUnits[channel]->getPitchSaliencePeaksRef(smooth);

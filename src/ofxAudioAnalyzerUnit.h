@@ -153,6 +153,8 @@ private:
     int hopsize;
     int zeropadding;
     Real framerate;
+
+    vector<float> temp;
     
 
     
