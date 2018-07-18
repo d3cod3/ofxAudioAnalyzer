@@ -172,8 +172,8 @@ void ofxAAMultiPitchKlapuriAlgorithm::compute(){
             localInd.push_back(maxInd_j);
             selCandInd.push_back(localInd);
             selCandVal.push_back(G[maxInd_i][maxInd_j]);
-            G[maxInd_i][maxInd_j] =- 1;
-            maxVal =- 1;
+            G[maxInd_i][maxInd_j] = - 1;
+            maxVal = - 1;
             maxInd_i = 0;
             maxInd_j = 0;
         }
