@@ -80,9 +80,9 @@ void ofxAudioAnalyzer::analyze(const ofSoundBuffer & inBuffer){
         return;
     }*/
     
-    if(static_cast<int>(inBuffer.getSampleRate()) != _samplerate){
+    /*if(static_cast<int>(inBuffer.getSampleRate()) != _samplerate){
         ofLogWarning()<<"ofxAudioAnalyzer: inBuffer sample rate not matching.";
-    }
+    }*/
     
     /*for (int i=0; i<_channels; i++){
         ofSoundBuffer chBuff;
